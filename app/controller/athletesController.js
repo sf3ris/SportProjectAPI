@@ -17,7 +17,7 @@ exports.get_all_athletes = (req,res) => {
 		}
 		res.send(response);
 	});
-}
+};
 
 // Insert Athlete Controller
 exports.insert_new_athlete = (req,res) => {
@@ -28,14 +28,14 @@ exports.insert_new_athlete = (req,res) => {
 		res.status(400).send({
 			error: true,
 			message: "Please Provide at least Name and LastNameNa"
-		})
+		});
 	}
 
 	Athlete.createNewAthlete(new_athlete, (err,response) => {
 		if(err) res.send(err);
 		res.json(response);
-	})
-}
+	});
+};
 
 // Single Athlete controller
 exports.get_an_athlete = (req,res) => {
@@ -55,8 +55,8 @@ exports.get_an_athlete = (req,res) => {
 			console.log('res',response);
 		}
 		res.send(response);
-	})
-}
+	});
+};
 
 // Update a single athlete controller
 exports.update_an_athlete = (req,res) => {
@@ -264,6 +264,60 @@ exports.register_new_membership = (req,res) => {
 	}
 
 	Membership.registerNewMembership(new_membership, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
+exports.get_a_membership = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+
+	if(!parseInt(IDAthlete) || !parseInt(IDMembership)){
+		res.status(400).send({
+			error: true,
+			message: "Please provide a valid Athlete ID or Membership ID"
+		})
+	};
+
+	Membership.getAMembership(IDAthlete, IDMembership, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
+exports.update_a_membership = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+
+	if(!parseInt(IDAthlete) || !parseInt(IDMembership)){
+		res.status(400).send({
+			error: true,
+			message: "Please provide a valid Athlete ID or Membership ID"
+		})
+	};
+
+	Membership.updateAMembership(IDAthlete, IDMembership, req.body, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.delete_a_membership = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+
+	if(!parseInt(IDAthlete) || !parseInt(IDMembership)){
+		res.status(400).send({
+			error: true,
+			message: "Please provide a valid Athlete ID or Membership ID"
+		})
+	};
+
+	Membership.deleteAMembership(IDAthlete,IDMembership, (err,response) => {
 		if(err) res.send(err);
 		res.json(response);
 	})

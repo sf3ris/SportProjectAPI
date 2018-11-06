@@ -72,8 +72,8 @@ Membership.getAMembership = (IDAthlete, IDMembership, result) => {
 					console.log(res);
 					result(null,res);
 				}
-			} )
-}
+			});
+};
 
 Membership.updateAMembership = (IDAthlete, IDMembership, new_membership, result) => {
 	db.query("UPDATE TesseramentoAtleta SET ? WHERE IDTesseramentoAtleta = ?",

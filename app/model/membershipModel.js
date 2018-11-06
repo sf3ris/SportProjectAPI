@@ -60,4 +60,48 @@ Membership.registerNewMembership = (new_membership, result) => {
 	})
 }
 
+Membership.getAMembership = (IDAthlete, IDMembership, result) => {	
+	db.query("SELECT * FROM Elenco_Tesseramenti ET WHERE ET.IDAtleta = ? AND ET.IDTesseramentoAtleta = ?",
+			[IDAthlete,IDMembership],
+			(err,res) => {
+				if(err){
+					console.log("error", err);
+					result(err, null);
+				}
+				else{
+					console.log(res);
+					result(null,res);
+				}
+			} )
+}
+
+Membership.updateAMembership = (IDAthlete, IDMembership, new_membership, result) => {
+	db.query("UPDATE TesseramentoAtleta SET ? WHERE IDTesseramentoAtleta = ?",
+			[new_membership, IDMembership],
+			(err,res) => {
+				if(err){
+					console.log("err",err);
+					result(err,null);
+				}
+				else {
+					result(null,res);
+				}
+			})
+}
+
+Membership.deleteAMembership = (IDAthlete, IDMembership, result) => {
+	db.query("DELETE FROM TesseramentoAtleta WHERE IDTesseramentoAtleta = ?",
+			IDMembership,
+			(err,res) => {
+				if(err){
+					console.log("err",err);
+					result(err,null);
+				}
+				else {
+					result(null,res);
+				}
+			}
+	)
+}
+
 module.exports = Membership;

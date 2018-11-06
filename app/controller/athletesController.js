@@ -3,7 +3,7 @@
 //Import Athletes Model
 var Athlete = require('../model/athletesModel.js');
 var Certificate = require('../model/certifiesModel.js');
-var Appointment = require('../model/appointmentsModel.js')
+var Appointment = require('../model/appointmentsModel.js');
 var Membership = require('../model/membershipModel.js');
 const mysql = require('mysql');
 

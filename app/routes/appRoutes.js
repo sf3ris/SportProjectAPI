@@ -45,7 +45,13 @@ module.exports = (app) => {
 	//Athletes's memberships Routes
 	app.route('/athletes/:IDAthlete/memberships')
 		.get(athletes.get_all_memberships)
-		.post(athletes.register_new_membership)	
+		.post(athletes.register_new_membership)
+		
+	//Athletes's single membership Routes
+	app.route('/athletes/:IDAthlete/memberships/:IDMembership')
+		.get(athletes.get_a_membership)
+		.put(athletes.update_a_membership)
+		.delete(athletes.delete_a_membership)
 
 	//Associates Routes	
 	app.route('/associates')
@@ -67,6 +73,7 @@ module.exports = (app) => {
 		.put(trainers.update_a_trainer)
 		.delete(trainers.remove_a_trainer)
 
+	//Memberships Routes
 	app.route('/memberships')
 		.get(memberships.get_all_memberships)
 

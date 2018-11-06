@@ -3,6 +3,8 @@ module.exports = (app) => {
 	var athletes = require('../controller/athletesController');
 	var associates = require('../controller/associateController');
 	var trainers = require('../controller/trainersController');
+	var reminders = require('../controller/reminderController.js');
+	var memberships = require('../controller/membershipsController.js');
 
 
 	//Athletes Routes
@@ -29,6 +31,22 @@ module.exports = (app) => {
 		.get(athletes.get_all_appointments)
 		.post(athletes.register_new_appointment)
 
+	//Athletes'appointment Routes
+	app.route('/athletes/:IDAthlete/appointments/:IDAppointment')
+		.get(athletes.get_an_appointment)
+		.put(athletes.update_an_appointment)
+		.delete(athletes.remove_an_appointment)
+
+	//Athletes'appointment's reminder Routes
+	app.route('/athletes/:IDAthlete/appointments/:IDAppointment/reminders')
+		.get(reminders.get_all_reminders_appointment)
+		.post(reminders.create_a_reminder)
+
+	//Athletes's memberships Routes
+	app.route('/athletes/:IDAthlete/memberships')
+		.get(athletes.get_all_memberships)
+		.post(athletes.register_new_membership)	
+
 	//Associates Routes	
 	app.route('/associates')
 		.get(associates.get_all_associates)
@@ -48,5 +66,8 @@ module.exports = (app) => {
 		.get(trainers.get_a_trainer)
 		.put(trainers.update_a_trainer)
 		.delete(trainers.remove_a_trainer)
+
+	app.route('/memberships')
+		.get(memberships.get_all_memberships)
 
 }

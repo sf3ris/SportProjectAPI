@@ -31,6 +31,45 @@ Appointment.registerNewAppointment = (newAppointment, result) =>{
 	})
 }
 
+Appointment.getAnAppointment = (IDAppointment,IDAthlete, result) => {
+
+	db.query("SELECT * FROM Elenco_Appuntamenti WHERE IDAppuntamento = ? AND IDAtleta = ?", [IDAppointment, IDAthlete], (err,res) => {
+		if(err){
+			console.log("err",err);
+			result(err,null);
+		}
+		else {
+			result(null,res);
+		}
+	})
+}
+
+Appointment.updateAnAppointment = (IDAppointment,IDAthlete,newAppointment, result) => {
+
+	db.query("UPDATE Appuntamento SET ? WHERE ? AND ?", [newAppointment, IDAppointment, IDAthlete], (err,res) => {
+		if(err){
+			console.log("err",err);
+			result(err,null);
+		}
+		else {
+			result(null,res);
+		}
+	})
+
+}
+
+Appointment.deleteAnAppointment = (IDAppointment, result) => {
+	db.query("CALL CeAt_RimuoviAppuntamento( ? )", IDAppointment, (err,res) => {
+		if(err){
+			console.log("err",err);
+			result(err,null);
+		}
+		else {
+			result(null,res);
+		}
+	})
+} 
+
 
 
 module.exports = Appointment;

@@ -4,6 +4,7 @@
 var Athlete = require('../model/athletesModel.js');
 var Certificate = require('../model/certifiesModel.js');
 var Appointment = require('../model/appointmentsModel.js')
+var Membership = require('../model/membershipModel.js');
 const mysql = require('mysql');
 
 // Exports Athletes list
@@ -172,6 +173,99 @@ exports.register_new_appointment = (req,res) => {
 		res.json({
 			data:response
 		});
+	})
+}
+
+exports.get_an_appointment = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDAppointment = mysql.escape(parseInt(req.params.IDAppointment));
+
+	if(!parseInt(IDAthlete) || !parseInt(IDAppointment)){
+		res.status(400).send({
+			error: true,
+			message: "Please Provide a valid Athlete ID or Appointment ID"
+		})
+	}
+
+	Appointment.getAnAppointment(IDAppointment,IDAthlete, (err,response) => {
+		if(err)
+			res.send(err)
+		res.json({
+			data:response
+		});
+	})	
+
+}
+
+exports.update_an_appointment = (req,res) => {
+
+	var new_appointment = req.body;
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDAppointment = mysql.escape(parseInt(req.params.IDAppointment));
+
+	if(!parseInt(IDAthlete) || !parseInt(IDAppointment)){
+		res.status(400).send({
+			error: true,
+			message: "Please Provide a valid Athlete ID or Appointment ID"
+		})
+	}
+
+	Appointment.updateAnAppointment(IDAppointment,IDAthlete,new_appointment,  (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
+
+exports.remove_an_appointment = (req,res) => {
+	
+	var IDAppointment = mysql.escape(parseInt(req.params.IDAppointment));
+
+	if(!parseInt(IDAthlete) || !parseInt(IDAppointment)){
+		res.status(400).send({
+			error: true,
+			message: "Please Provide a valid Athlete ID or Appointment ID"
+		})
+	}
+
+	Appointment.deleteAnAppointment(IDAppointment, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
+exports.get_all_memberships = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	if(!parseInt(IDAthlete)){
+		res.status(400).send({
+			error: true,
+			message: "Please Provide a valid Athlete ID or Appointment ID"
+		})
+	}
+
+	Membership.getAllMembershipsForAnAthlet(IDAthlete, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
+exports.register_new_membership = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var new_membership = new Membership(req.body);
+
+	if(!parseInt(IDAthlete) || !new_membership.IDAnnoSportivo || !new_membership.Importo || !new_membership.DataInizio){
+		res.status(400).send({
+			error: true,
+			message: "Please Provide a valid body request"
+		})
+	}
+
+	Membership.registerNewMembership(new_membership, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
 	})
 
 }

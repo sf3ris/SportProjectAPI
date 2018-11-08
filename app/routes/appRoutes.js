@@ -5,6 +5,7 @@ module.exports = (app) => {
 	var trainers = require('../controller/trainersController');
 	var reminders = require('../controller/reminderController.js');
 	var memberships = require('../controller/membershipsController.js');
+	var deadlines = require('../controller/deadlineController.js');
 
 
 	//Athletes Routes
@@ -75,6 +76,19 @@ module.exports = (app) => {
 
 	//Memberships Routes
 	app.route('/memberships')
-		.get(memberships.get_all_memberships)
+		.get(memberships.get_all_memberships);
 
-}
+	//Deadlines Routes
+	app.route('/deadlines')
+		.get(deadlines.get_all_deadlines);
+
+	//Athlete's Membership's deadlines Routes
+	app.route('/athletes/:IDAthlete/memberships/:IDMembership/deadlines')
+		.get(memberships.get_all_deadlines)
+		.post(memberships.insert_new_deadline)
+
+	app.route('/athletes/:IDAthlete/memberships/:IDMembership/deadlines/:IDDeadline')
+		.get(deadlines.get_a_deadline)
+		.put(deadlines.update_a_deadline)
+		.delete(deadlines.delete_a_deadline);
+};

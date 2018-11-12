@@ -91,4 +91,20 @@ module.exports = (app) => {
 		.get(deadlines.get_a_deadline)
 		.put(deadlines.update_a_deadline)
 		.delete(deadlines.delete_a_deadline);
+
+	
+	//Athletes'payments routes 
+	app.route('/athletes/:IDAthlete/payments')
+		.get(athletes.get_all_payments);
+	
+	app.route('/athletes/:IDAthlete/memberships/:IDMembership/payments')
+		.get(athletes.get_all_payments_for_membership)
+		.post(athletes.insert_new_payment);
+	
+	app.route('/athletes/:IDAthlete/memberships/:IDMembership/payments/:IDPayment')
+		.get(athletes.get_a_single_payment)
+		.put(athletes.update_a_payment)
+		.delete(athletes.delete_a_payment);
+
+	
 };

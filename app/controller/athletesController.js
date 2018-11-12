@@ -1,11 +1,15 @@
 'use strict';
 
-//Import Athletes Model
+//Import Models
 var Athlete = require('../model/athletesModel.js');
 var Certificate = require('../model/certifiesModel.js');
 var Appointment = require('../model/appointmentsModel.js');
 var Membership = require('../model/membershipModel.js');
+var Payment = require('../model/paymentModel.js');
 const mysql = require('mysql');
+
+//Import checking scripts
+var inputChecker = require('../utility/inputChecker.js');
 
 // Exports Athletes list
 exports.get_all_athletes = (req,res) => {
@@ -319,6 +323,96 @@ exports.delete_a_membership = (req,res) => {
 
 	Membership.deleteAMembership(IDAthlete,IDMembership, (err,response) => {
 		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.get_all_payments = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+
+	Payment.GetAllPaymentsForAnAthlete(IDAthlete,(err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.get_all_payments_for_membership = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+	inputChecker.parse_int_input(res,IDMembership);
+
+	Payment.GetAllPaymentsForAMembership(IDMembership,IDAthlete, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.insert_new_payment = (req,res) => {
+
+	var new_payment = new Payment(req.body);
+
+	if(!new_payment.IDTesseramentoAtleta && !new_payment.IDScadenzaRataTesseramento){
+		res.status(400).send({
+			error: true,
+			message: "Please Provide at least a valid membership or membership's deadline"
+		})
+	}
+
+	Payment.InsertNewPayment(new_payment, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.update_a_payment = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+	var IDPayment = mysql.escape(parseInt(req.params.IDMembership));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+	inputChecker.parse_int_input(res,IDMembership);
+	inputChecker.parse_int_input(res,IDPayment);
+
+	Payment.updateAPayment(req.body, IDPayment, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.get_a_single_payment = (req,res) => {
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+	var IDPayment = mysql.escape(parseInt(req.params.IDMembership));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+	inputChecker.parse_int_input(res,IDMembership);
+	inputChecker.parse_int_input(res,IDPayment);
+
+	Payment.GetASinglePayment(IDPayment, (err,res) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.delete_a_payment = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+	var IDPayment = mysql.escape(parseInt(req.params.IDMembership));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+	inputChecker.parse_int_input(res,IDMembership);
+	inputChecker.parse_int_input(res,IDPayment);
+
+	Payment.DeleteAPayment(IDPayment,(err,res) => {
+		if(errm) res.send(err);
 		res.json(response);
 	})
 

@@ -21,8 +21,8 @@ Membership.getAllMemberships = (result) => {
 			console.log(res)
 			result(null,res)
 		}
-	})
-}
+	});
+};
 
 Membership.getAllMembershipsForAnAthlet = (IDAthlete, result) => {
 	db.query(getAllMembershipsQuery + " WHERE IDAtleta = ? ", IDAthlete, (err, res) => {
@@ -34,8 +34,8 @@ Membership.getAllMembershipsForAnAthlet = (IDAthlete, result) => {
 			console.log(res);
 			result(null,res);
 		}
-	})
-}
+	});
+};
 
 Membership.registerNewMembership = (new_membership, result) => {
 
@@ -57,8 +57,8 @@ Membership.registerNewMembership = (new_membership, result) => {
 		}
 		console.log("Inserted Reminder ID : " + res.insertId);
 		result(null,res.insertId);
-	})
-}
+	});
+};
 
 Membership.getAMembership = (IDAthlete, IDMembership, result) => {	
 	db.query("SELECT * FROM Elenco_Tesseramenti ET WHERE ET.IDAtleta = ? AND ET.IDTesseramentoAtleta = ?",
@@ -86,8 +86,8 @@ Membership.updateAMembership = (IDAthlete, IDMembership, new_membership, result)
 				else {
 					result(null,res);
 				}
-			})
-}
+			});
+};
 
 Membership.deleteAMembership = (IDAthlete, IDMembership, result) => {
 	db.query("DELETE FROM TesseramentoAtleta WHERE IDTesseramentoAtleta = ?",
@@ -101,7 +101,7 @@ Membership.deleteAMembership = (IDAthlete, IDMembership, result) => {
 					result(null,res);
 				}
 			}
-	)
-}
+	);
+};
 
 module.exports = Membership;

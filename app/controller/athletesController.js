@@ -25,7 +25,8 @@ exports.get_all_athletes = (req,res) => {
 
 // Insert Athlete Controller
 exports.insert_new_athlete = (req,res) => {
-	var new_athlete = new Athlete(req.body);
+	var new_athlete = new Athlete(req.body.athlete);
+	console.log(new_athlete);
 
 	//handles null error
 	if(!new_athlete.Nome || !new_athlete.Cognome){
@@ -65,11 +66,13 @@ exports.get_an_athlete = (req,res) => {
 // Update a single athlete controller
 exports.update_an_athlete = (req,res) => {
 
+	console.log(req.body);
+
 	var IDAthlete = parseInt(req.params.IDAthlete);
 	var paramArray = new Array;
-	for (const prop in req.body){
+	for (const prop in req.body.athlete){
 		console.log(prop);
-		console.log(req.body[prop])
+		console.log(req.body.athlete[prop])
 	}
 
 	Athlete.updateAnAthlete(IDAthlete ,req.body, (err,response) => {

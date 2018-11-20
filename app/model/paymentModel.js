@@ -18,7 +18,7 @@ Payment.getAllPayments = (result) => {
 			console.log(err,null);
 		}
 		else {
-			console.log(res);
+			console.log(res); 
 			result(null,res);
 		}
     });

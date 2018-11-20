@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 
 const mysql = require('mysql');
 
 const mc = require('./database.js');
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

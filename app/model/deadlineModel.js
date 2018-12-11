@@ -108,7 +108,28 @@ Deadline.deleteADeadline = (IDDeadline, result) => {
             console.log(res);
             result(null,res);
         }
+    });
+};
+
+Deadline.getDeadlinesState = (IDAthlete,result) => {
+
+    GET_ATHLETES_DEADLINES_STATE = "SELECT * FROM Situazione_Scadenze_Tesseramenti_Atleti WHERE IDAtleta = ?";
+
+    db.query(GET_ATHLETES_DEADLINES_STATE, IDAthlete, (err,rows) => {
+        if(err) result(err,null);
+        result(null,rows);
     })
+}
+
+Deadline.getMembershipDeadlinesState = (IDAthlete, IDMembership, result) => {
+
+    let GET_ATHLETES_MEMBERSHIPS_DEADLINES_STATE_QUERY = "SELECT * FROM Situazione_Scadenze_Tesseramenti_Atleti WHERE IDAtleta = ? AND IDTesseramentoAtleta = ?";
+
+    db.query(GET_ATHLETES_MEMBERSHIPS_DEADLINES_STATE_QUERY, [IDAthlete, IDMembership], (err,rows) => {
+        if(err) result(err,null);
+        result(null,rows);
+    })
+
 }
 
 module.exports = Deadline;

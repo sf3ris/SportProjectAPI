@@ -18,7 +18,7 @@ exports.get_all_associates = (req,res) => {
 
 // Insert Associate Controller
 exports.insert_new_associate = (req,res) => {
-	var new_associate = new Associate(req.body);
+	var new_associate = new Associate(req.body.associate);
 
 	//handles null error
 	if(!new_associate.Nome || !new_associate.Cognome){

@@ -6,6 +6,8 @@ var Certificate = require('../model/certifiesModel.js');
 var Appointment = require('../model/appointmentsModel.js');
 var Membership = require('../model/membershipModel.js');
 var Payment = require('../model/paymentModel.js');
+var Deadline = require('../model/deadlineModel.js');
+
 const mysql = require('mysql');
 
 //Import checking scripts
@@ -115,8 +117,7 @@ exports.get_all_certificates = (req,res) => {
 	}
 
 	Athlete.getAllCertificates(IDAthlete, (err,response) => {
-		if(err)
-			res.send(err)
+		if(err) res.send(err)
 		res.json({
 			response
 		});
@@ -125,6 +126,8 @@ exports.get_all_certificates = (req,res) => {
 
 exports.register_new_certificate = (req,res) => {
 	var new_certificate = new Certificate(req.body);
+	console.log(req.body);
+	console.log(new_certificate);
 
 	if(!new_certificate.IDAtleta){
 		res.status(400).send({
@@ -398,7 +401,7 @@ exports.get_a_single_payment = (req,res) => {
 	inputChecker.parse_int_input(res,IDMembership);
 	inputChecker.parse_int_input(res,IDPayment);
 
-	Payment.GetASinglePayment(IDPayment, (err,res) => {
+	Payment.GetASinglePayment(IDPayment, (err,response) => {
 		if(err) res.send(err);
 		res.json(response);
 	});
@@ -414,8 +417,34 @@ exports.delete_a_payment = (req,res) => {
 	inputChecker.parse_int_input(res,IDMembership);
 	inputChecker.parse_int_input(res,IDPayment);
 
-	Payment.DeleteAPayment(IDPayment,(err,res) => {
-		if(errm) res.send(err);
+	Payment.DeleteAPayment(IDPayment,(err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
+exports.membership_state = (req,res) => {
+	
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+
+	Membership.getAthletesMembershipsState(IDAthlete, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	});
+};
+
+exports.get_deadlines_state = (req,res) => {
+
+	var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+
+	inputChecker.parse_int_input(res,IDAthlete);
+	inputChecker.parse_int_input(res,IDMembership);
+
+	Deadline.getMembershipDeadlinesState(IDAthlete,IDMembership,(err,response) => {
+		if(err) res.send(err);
 		res.json(response);
 	})
 

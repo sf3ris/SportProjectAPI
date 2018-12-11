@@ -50,19 +50,34 @@ Membership.registerNewMembership = (new_membership, result) => {
 	}
 	console.log(formattedArray);
 
-	db.query("CALL TeAt_RegistraTesseramento( ? );",[formattedArray], (err,res) => {
+	db.query("CALL TeAt_RegistraTesseramento( ? , @insert_id);SELECT @insert_id as insertid;",[formattedArray], (err,res) => {
 		if (err){
 			console.log("error",err);
 			result(err,null);
 		}
-		console.log("Inserted Reminder ID : " + res.insertId);
-		result(null,res.insertId);
+		console.log("Inserted Membership ID : " + res);
+		result(null,res);
 	});
 };
 
 Membership.getAMembership = (IDAthlete, IDMembership, result) => {	
 	db.query("SELECT * FROM Elenco_Tesseramenti ET WHERE ET.IDAtleta = ? AND ET.IDTesseramentoAtleta = ?",
 			[IDAthlete,IDMembership],
+			(err,res) => {
+				if(err){
+					console.log("error", err);
+					result(err, null);
+				}
+				else{
+					console.log(res);
+					result(null,res);
+				}
+			});
+};
+
+Membership.getMembership = (IDMembership, result) => {	
+	db.query("SELECT * FROM Elenco_Tesseramenti ET WHERE ET.IDTesseramentoAtleta = ?",
+			IDMembership,
 			(err,res) => {
 				if(err){
 					console.log("error", err);
@@ -103,5 +118,25 @@ Membership.deleteAMembership = (IDAthlete, IDMembership, result) => {
 			}
 	);
 };
+
+Membership.getMembershipsState = (result) => {
+	
+	let GET_MEMBERSHIPS_STATE_QUERY = "SELECT * FROM Situazione_Tesseramenti_Atleti;"
+	
+	db.query(GET_MEMBERSHIPS_STATE_QUERY, (err,rows) => {
+		if(err) result(err,null);
+		result(null,rows);
+	});
+};
+
+Membership.getAthletesMembershipsState = (IDAthlete,result) => {
+	
+	let GET_ATHLETES_MEMBERSHIPS_STATE_QUERY = "SELECT * FROM Situazione_Tesseramenti_Atleti WHERE IDAtleta = ?;"
+
+	db.query(GET_ATHLETES_MEMBERSHIPS_STATE_QUERY, IDAthlete, (err,rows) => {
+		if(err) result(err,null);
+		result(null,rows);
+	})
+}
 
 module.exports = Membership;

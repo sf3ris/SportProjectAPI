@@ -18,8 +18,8 @@ exports.get_all_trainers = (req,res) => {
 
 // Insert Trainer Controller
 exports.insert_new_trainer = (req,res) => {
-	var new_trainer = new Trainer(req.body);
-	var IDLivello = mysql.escape(parseInt(req.query.livello));
+	var new_trainer = new Trainer(req.body.trainer);
+	var IDLivello = mysql.escape(parseInt(req.body.trainer.IDLivello));
 
 	//handles null error
 	if(!new_trainer.Nome || !new_trainer.Cognome){

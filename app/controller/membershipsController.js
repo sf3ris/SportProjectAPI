@@ -47,4 +47,14 @@ exports.insert_new_deadline = (req,res) => {
 	});
 };
 
+exports.get_a_membership = (req,res) => {
+	var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
+	inputChecker.parse_int_input(res,IDMembership,"Membership");
+
+	Membership.getMembership(IDMembership, (err,response) => {
+		if(err) res.send(err);
+		res.json(response);
+	})
+}
+
 

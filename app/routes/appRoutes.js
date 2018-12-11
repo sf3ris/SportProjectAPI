@@ -6,6 +6,9 @@ module.exports = (app) => {
 	var reminders = require('../controller/reminderController.js');
 	var memberships = require('../controller/membershipsController.js');
 	var deadlines = require('../controller/deadlineController.js');
+	var certificates = require('../controller/certificatesController.js');
+	var appointments = require('../controller/appointmentsController.js');
+	var payments = require('../controller/paymentsController.js');
 
 
 	//Athletes Routes
@@ -53,6 +56,10 @@ module.exports = (app) => {
 		.get(athletes.get_a_membership)
 		.put(athletes.update_a_membership)
 		.delete(athletes.delete_a_membership)
+	
+	//Athletes'membership state
+	app.route('/athletes/:IDAthlete/membershipstate')
+		.get(athletes.membership_state);
 
 	//Associates Routes	
 	app.route('/associates')
@@ -77,6 +84,9 @@ module.exports = (app) => {
 	//Memberships Routes
 	app.route('/memberships')
 		.get(memberships.get_all_memberships);
+	
+	app.route('/memberships/:IDMembership')
+		.get(memberships.get_a_membership);
 
 	//Deadlines Routes
 	app.route('/deadlines')
@@ -86,6 +96,10 @@ module.exports = (app) => {
 	app.route('/athletes/:IDAthlete/memberships/:IDMembership/deadlines')
 		.get(memberships.get_all_deadlines)
 		.post(memberships.insert_new_deadline)
+
+	//Athlete's Membership's deadlines state
+	app.route('/athletes/:IDAthlete/memberships/:IDMembership/deadlinestate')
+		.get(athletes.get_deadlines_state);
 
 	app.route('/athletes/:IDAthlete/memberships/:IDMembership/deadlines/:IDDeadline')
 		.get(deadlines.get_a_deadline)
@@ -106,5 +120,15 @@ module.exports = (app) => {
 		.put(athletes.update_a_payment)
 		.delete(athletes.delete_a_payment);
 
+	//Certificates routes
+	app.route('/certificates')
+		.get(certificates.get_all_certificates);
+
+	//Appointments routes
+	app.route('/appointments')
+		.get(appointments.get_all_appointments);
+	
+	app.route('/payments')
+		.get(payments.get_all_payments);
 	
 };

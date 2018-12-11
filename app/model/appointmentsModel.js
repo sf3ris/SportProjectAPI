@@ -44,6 +44,18 @@ Appointment.getAnAppointment = (IDAppointment,IDAthlete, result) => {
 	})
 }
 
+Appointment.getAllAppointments = (result) => {
+	db.query("SELECT * FROM Elenco_Appuntamenti", (err,res) => {
+		if(err){
+			console.log("err",err);
+			result(err,null);
+		}
+		else {
+			result(null,res);
+		}
+	});
+};
+
 Appointment.updateAnAppointment = (IDAppointment,IDAthlete,newAppointment, result) => {
 
 	db.query("UPDATE Appuntamento SET ? WHERE ? AND ?", [newAppointment, IDAppointment, IDAthlete], (err,res) => {

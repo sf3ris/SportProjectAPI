@@ -8,6 +8,8 @@ var Certificate = function(certificate) {
 	this.DataFine = certificate.DataFine;
 	this.IDAppuntamento = certificate.IDAppuntamento;
 	this.IDAnnoSportivo = certificate.IDAnnoSportivo;
+	this.Esito = certificate.Esito;
+	this.Note = certificate.Note
 }
 
 Certificate.registerNewCertificate = (newCertificate,result) => {
@@ -31,6 +33,19 @@ Certificate.registerNewCertificate = (newCertificate,result) => {
 		console.log("Inserted Certificate ID : " + res.insertId);
 		result(null,res.insertId);
 	})
+}
+
+Certificate.getAllCertificates = (result) => {
+	db.query("SELECT * FROM Elenco_Certificati ORDER BY IDCertificato", (err,res) => {
+		if(err){
+			console.log("Error", null);
+			result(err, null);
+		}
+		else{
+			console.log(res);
+			result(null,res);
+		}
+	});
 }
 
 

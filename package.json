@@ -16,6 +16,6 @@
     "mysql": "^2.16.0"
   },
   "scripts": {
-      "start" : "nodemon index.js"
+      "start" : "nodemon server.js"
   }
 }

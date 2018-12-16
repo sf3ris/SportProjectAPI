@@ -361,6 +361,7 @@ exports.get_all_payments_for_membership = (req,res) => {
 
 exports.insert_new_payment = (req,res) => {
 
+	console.log(req.body);
 	var new_payment = new Payment(req.body);
 
 	if(!new_payment.IDTesseramentoAtleta && !new_payment.IDScadenzaRataTesseramento){

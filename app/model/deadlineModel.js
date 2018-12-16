@@ -12,7 +12,7 @@ var Deadline = function(deadline) {
 
 const getAllDeadlinesQuery = "SELECT * FROM Elenco_ScadenzeTesseramento EST";
 
-
+//Retrieve all deadlines
 Deadline.getAllDeadlines = (result) => {
 
     db.query(getAllDeadlinesQuery, (err,res) => {
@@ -27,6 +27,17 @@ Deadline.getAllDeadlines = (result) => {
     });
 };
 
+//Retrieve all pending deadlines
+Deadline.getAllPendingDeadlines = (result) => {
+
+    let GET_ALL_PENDING_DEADLINES_QUERY = "SELECT * FROM Situazione_Scadenze_Tesseramenti_Atleti WHERE (Importo > importoPagato) OR (importoPagato is null) ORDER BY DataScadenza ASC;";
+
+    db.query(GET_ALL_PENDING_DEADLINES_QUERY, (err,rows) => {
+        if(err) result(err,null);
+        result(null,rows);
+    })
+}
+
 Deadline.getDeadlinesForAthlete = (IDAthlete, result) => {
 
     db.query(getAllDeadlinesQuery + " WHERE EST.IDAtleta = ?",
@@ -34,7 +45,7 @@ Deadline.getDeadlinesForAthlete = (IDAthlete, result) => {
             (err,res) => {
                 if(err){
                     console.log(null,err);
-                    res.send(err);
+                    result(err);
                 }
                 else{
                     console.log(res);

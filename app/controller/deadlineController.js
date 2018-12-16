@@ -7,6 +7,7 @@ var inputChecker = require('../utility/inputChecker.js');
 
 const mysql = require('mysql');
 
+
 exports.get_all_deadlines = (req,res) => {
 
     Deadline.getAllDeadlines((err,response) => {
@@ -15,19 +16,29 @@ exports.get_all_deadlines = (req,res) => {
     });
 };
 
+exports.get_all_pending_deadlines = (req,res) => {
+
+    Deadline.getAllPendingDeadlines((err,response) => {
+        if(err) res.send(err);
+        res.json({
+            length: response.length,
+            data: response
+        })
+    })
+}
+
 exports.get_a_deadline = (req,res) => {
 
     var IDDeadline = mysql.escape(parseInt(req.params.IDDeadline));
     var IDAthlete = mysql.escape(parseInt(req.params.IDAthlete));
     var IDMembership = mysql.escape(parseInt(req.params.IDMembership));
 
-    inputChecker.parse_int_input(res,IDDeadline,"Deadline");
-    inputChecker.parse_int_input(res,IDAthlete,"Athlete");
-    inputChecker.parse_int_input(res,IDMembership,"Membership");
-
     Deadline.getADeadline(IDDeadline,(err,response) => {
         if(err) res.send(err);
-        res.json(response);
+        res.json({
+            length: response.length,
+            data: response
+        });
     });
 };
 

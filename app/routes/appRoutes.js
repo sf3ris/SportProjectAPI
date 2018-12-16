@@ -92,6 +92,13 @@ module.exports = (app) => {
 	app.route('/deadlines')
 		.get(deadlines.get_all_deadlines);
 
+	//Single Deadline Routes
+	app.route('/deadlines/:IDDeadline')
+		.get(deadlines.get_a_deadline);
+
+	app.route('/pendingdeadlines')
+		.get(deadlines.get_all_pending_deadlines);
+
 	//Athlete's Membership's deadlines Routes
 	app.route('/athletes/:IDAthlete/memberships/:IDMembership/deadlines')
 		.get(memberships.get_all_deadlines)

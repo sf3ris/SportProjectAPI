@@ -114,12 +114,12 @@ exports.change_associate_team = (req,res) => {
 //Remove an associate from a team
 exports.remove_associate_from_team = (req,res) => {
 
-    let IDTeam = mysql.escape(parseInt(req.params.IDTeam));
-    let IDAssociate = msyql.escape(parseInt(req.params.IDAssociate));
+    let IDTeam = mysql.escape(parseInt(req.params.idteam));
+    let IDAssociate = mysql.escape(parseInt(req.params.idassociate));
 
     //validate requests
-    inputChecker.parse_int_input(res,IDTeam, "Team ID");
-    inputChecker.parse_int_input(res,IDAssociate, "Associate ID");
+    //inputChecker.parse_int_input(res,IDTeam, "Team ID");
+    //inputChecker.parse_int_input(res,IDAssociate, "Associate ID");
 
     TeamAssociate.removeAssociateFromTeam(IDTeam,IDAssociate,(err,rows) => {
 

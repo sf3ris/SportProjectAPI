@@ -33,7 +33,7 @@ module.exports = (app) => {
         .post(teamTrainer.link_trainers_into_team);
     
     //Team's Trainer's Routes
-    app.route('/teams/:idteam/trainers/:idtrainers')
+    app.route('/teams/:idteam/trainers/:idtrainer')
         .get(teamTrainer.get_a_team_trainer_info)
         .put(teamTrainer.change_trainer_team)
         .delete(teamTrainer.remove_trainer_from_team);

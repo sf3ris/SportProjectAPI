@@ -88,8 +88,11 @@ exports.delete_a_team = (req,res) => {
 exports.update_a_team = (req,res) => {
 
     let IDTeam = mysql.escape(parseInt(req.params.idteam));
+
+    console.log(req.body);
+    console.log(IDTeam);
     //Check for valid integer ID
-    inputChecker.parse_int_input(res,IDTeam,"Team ID");
+    //inputChecker.parse_int_input(res,IDTeam,"Team ID");
 
     Team.updateATeam(IDTeam, req.body, (err,rows) => {
         

@@ -2,6 +2,7 @@
 var db = require('./database.js');
 
 var Team = function(team) {
+
 	this.Descrizione = team.Descrizione;
 	this.DescrizioneBreve = team.DescrizioneBreve;
 }
@@ -11,7 +12,7 @@ var Team = function(team) {
 */
 Team.getAllTeams = (result) => {
 
-    let GET_ALL_TEAMS_QUERY = "SELECT * FROM Squadra;"
+    let GET_ALL_TEAMS_QUERY = "SELECT * FROM Elenco_Squadre;"
 
     db.query(GET_ALL_TEAMS_QUERY, (err,rows) => {
         if(err){
@@ -27,7 +28,7 @@ Team.getAllTeams = (result) => {
 */
 Team.getSingleTeam = (IDTeam,result) => {
 
-    let GET_SINGLE_TEAM_QUERY = "SELECT * FROM Squadra S WHERE S.IDSquadra = ?;";
+    let GET_SINGLE_TEAM_QUERY = "SELECT * FROM Elenco_Squadre S WHERE S.IDSquadra = ?;";
 
     db.query(GET_SINGLE_TEAM_QUERY, IDTeam, (err,rows) => {
         if(err){

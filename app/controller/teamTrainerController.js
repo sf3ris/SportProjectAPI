@@ -114,12 +114,14 @@ exports.change_trainer_team = (req,res) => {
 //Remove an trainer from a team
 exports.remove_trainer_from_team = (req,res) => {
 
-    let IDTeam = mysql.escape(parseInt(req.params.IDTeam));
-    let IDTrainer = msyql.escape(parseInt(req.params.IDTrainer));
+    let IDTeam = mysql.escape(parseInt(req.params.idteam));
+    let IDTrainer = mysql.escape(parseInt(req.params.idtrainer));
+
+    console.log(req.params);
 
     //validate requests
-    inputChecker.parse_int_input(res,IDTeam, "Team ID");
-    inputChecker.parse_int_input(res,IDTrainer, "Trainer ID");
+    //inputChecker.parse_int_input(res,IDTeam, "Team ID");
+    //inputChecker.parse_int_input(res,IDTrainer, "Trainer ID");
 
     TeamTrainer.removeTrainerFromTeam(IDTeam,IDTrainer,(err,rows) => {
 

@@ -47,13 +47,16 @@ exports.get_a_team_athletes = (req,res) => {
 //Link an Athlete into a Team
 exports.link_athletes_into_team = (req,res) => {
 
-    let IDTeam = req.params.IDTeam;
+    //let IDTeam = req.params.IDTeam;
 
-    inputChecker.parse_int_input(res,IDTeam, "Team ID");
-    inputChecker.parse_int_input(res,req.body.IDTeam, "Team ID");
-    inputChecker.parse_int_input(res,req.body.IDAthlete, "Athlete ID");
+    console.log(req.body);
+
+    /* await inputChecker.parse_int_input(res,IDTeam, "Team ID");
+    await inputChecker.parse_int_input(res,req.body.IDTeam, "Team ID");
+    await inputChecker.parse_int_input(res,req.body.IDAthlete, "Athlete ID") */;
 
     let newTeamAthlete = new TeamAthlete(req.body);
+    console.log(newTeamAthlete);
 
     TeamAthlete.addAthleteToTeam(newTeamAthlete,(err,rows) => {
 
@@ -92,12 +95,14 @@ exports.get_a_team_athlete_info = (req,res) => {
 //Changes an athletes team
 exports.change_athlete_team = (req,res) => {
 
-    let IDTeam = mysql.escape(parseInt(req.params.IDTeam));
-    let IDAthlete = msyql.escape(parseInt(req.params.IDAthlete));
+    let IDTeam = mysql.escape(parseInt(req.params.idteam));
+    let IDAthlete = mysql.escape(parseInt(req.params.idathlete));
+
+    console.log(req.params);
 
     //validate requests
-    inputChecker.parse_int_input(res,IDTeam, "Team ID");
-    inputChecker.parse_int_input(res,IDAthlete, "Athlete ID");
+    //inputChecker.parse_int_input(res,IDTeam, "Team ID");
+    //inputChecker.parse_int_input(res,IDAthlete, "Athlete ID");
 
     TeamAthlete.updateTeamAthlete(IDTeam,IDAthlete, (err,rows) => {
 
@@ -114,12 +119,12 @@ exports.change_athlete_team = (req,res) => {
 //Remove an athlete from a team
 exports.remove_athlete_from_team = (req,res) => {
 
-    let IDTeam = mysql.escape(parseInt(req.params.IDTeam));
-    let IDAthlete = msyql.escape(parseInt(req.params.IDAthlete));
+    let IDTeam = mysql.escape(parseInt(req.params.idteam));
+    let IDAthlete = mysql.escape(parseInt(req.params.idathlete));
 
     //validate requests
-    inputChecker.parse_int_input(res,IDTeam, "Team ID");
-    inputChecker.parse_int_input(res,IDAthlete, "Athlete ID");
+    //inputChecker.parse_int_input(res,IDTeam, "Team ID");
+    //inputChecker.parse_int_input(res,IDAthlete, "Athlete ID");
 
     TeamAthlete.removeAthleteFromTeam(IDTeam,IDAthlete,(err,rows) => {
 

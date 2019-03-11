@@ -5,7 +5,7 @@
 exports.parse_int_input = (res,integerToCheck, integerDescription) => {
 	return new Promise((resolve,reject) => {
 		if(!parseInt(integerToCheck)){
-			reject();
+			reject("Please provide a valid integer");
 		}
 		else{
 			resolve();

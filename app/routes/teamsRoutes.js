@@ -4,6 +4,7 @@ module.exports = (app) => {
     var teamAthlete = require('../controller/teamAthletecontroller');
     var teamTrainer = require('../controller/teamTrainerController');
     var teamAssociate = require('../controller/teamAssociateController');
+    var eventTeam = require('../controller/events/eventTeamController.js');
 
     // Teams Routes
     app.route('/teams')
@@ -48,5 +49,9 @@ module.exports = (app) => {
         .get(teamAssociate.get_a_team_associate_info)
         .put(teamAssociate.change_associate_team)
         .delete(teamAssociate.remove_associate_from_team);
+
+    //Team's Event's Routes
+    app.route('/teams/:idTeam/events')
+        .get(eventTeam.get_all_events_for_a_team)
     
 };

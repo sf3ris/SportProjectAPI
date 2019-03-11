@@ -16,9 +16,12 @@ app.use(bodyParser.json());
 var routes = require('./app/routes/appRoutes.js');
 var trainerRoutes = require('./app/routes/trainersRoutes.js');
 var teamsRoutes = require('./app/routes/teamsRoutes.js'); 
+var eventRoutes = require('./app/routes/eventRoutes.js');
+
 routes(app); //register the route
-trainerRoutes(app);
-teamsRoutes(app);
+trainerRoutes(app); //Trainer Routes
+teamsRoutes(app); //Teams Routes
+eventRoutes(app); //Event Routes
 
 app.listen(port, () => {
 	console.log('Sport Project server listing on port ' + port)

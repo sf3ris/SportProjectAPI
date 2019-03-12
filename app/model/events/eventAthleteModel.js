@@ -44,7 +44,7 @@ EventAthlete.GetAllEventsAthletes = (result) =>{
  */
 EventAthlete.GetAllAthletesForAnEvent = (idEvent,result) => {
 
-    let QUERY_GET_ALL_ATHLETES = "SELECT * FROM Elenco_EventiInteressati WHERE TipoInteresse = 'Atleta' AND IDEvento = ?;";
+    let QUERY_GET_ALL_ATHLETES = "SELECT DISTINCT * FROM Elenco_EventiSquadraInteressati WHERE TipoInteresse = 'Atleta' AND IDEvento = ?;";
 
     db.query(QUERY_GET_ALL_ATHLETES,idEvent, (err,rows) => {
 

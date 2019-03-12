@@ -69,7 +69,7 @@ EventAssociate.GetSingleAssociateForSingleEvent = (idAssociate,idEvent,result) =
  */
 EventAssociate.GetAllAssociatesForAnEvent = (idEvent,result) => {
 
-    let QUERY_GET_ALL_ATHLETES = "SELECT * FROM Elenco_EventiInteressati WHERE TipoInteresse = 'Staff' AND IDEvento = ?;";
+    let QUERY_GET_ALL_ATHLETES = "SELECT DISTINCT * FROM Elenco_EventiSquadraInteressati WHERE TipoInteresse = 'Staff' AND IDEvento = ?;";
 
     db.query(QUERY_GET_ALL_ATHLETES,idEvent, (err,rows) => {
 
